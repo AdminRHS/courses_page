@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" class=""> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Academy - All Courses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background-color: #f7fafc; /* Light Theme Default BG (з дизайн-системи) */
+        }
+        .dark body {
+            background-color: #1a202c; /* Dark Theme Default BG (з дизайн-системи) */
+        }
+        /* Custom scrollbar (з попереднього файлу) */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f5f5f5; }
+        .dark ::-webkit-scrollbar-track { background: #2d3748; }
+        ::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 6px; }
+        .dark ::-webkit-scrollbar-thumb { background: #424242; }
+        ::-webkit-scrollbar-thumb:hover { background: #bdbdbd; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #616161; }
+
+        /* Внутрішня тінь для інпутів/прогрес-барів з дизайн-системи */
+        .inset-shadow {
+            box-shadow: inset 2px 2px 5px #e0e0e0, inset -2px -2px 5px #ffffff;
+        }
+        .dark .inset-shadow {
+            box-shadow: inset 2px 2px 5px #000000, inset -2px -2px 5px #2d3748;
+        }
+
+    </style>
+</head>
+<body class="text-[#2d3748] dark:text-[#f7fafc] transition-colors duration-300">
+
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-[#1f2937] shadow-md flex flex-col p-4 fixed h-full z-20">
+            <div class="text-2xl font-bold text-[#63b3ed] mb-8">
+                <i data-lucide="graduation-cap" class="inline-block"></i> Game Academy
+            </div>
+            <nav class="flex-grow space-y-2">
+                <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="home" class="w-5 h-5 mr-3"></i> Home
+                </a>
+                <a href="#" class="flex items-center p-2 bg-[#63b3ed]/10 text-[#63b3ed] font-semibold rounded-lg">
+                    <i data-lucide="book-open" class="w-5 h-5 mr-3"></i> Courses
+                </a>
+                <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="git-merge" class="w-5 h-5 mr-3"></i> Learning Paths
+                </a>
+                 <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i> Leaderboard
+                </a>
+                <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="file-check" class="w-5 h-5 mr-3"></i> My Tests
+                </a>
+                <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="bookmark" class="w-5 h-5 mr-3"></i> Bookmarks
+                </a>
+                <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="pie-chart" class="w-5 h-5 mr-3"></i> Analytics
+                </a>
+                <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="library" class="w-5 h-5 mr-3"></i> Lesson Library
+                </a>
+                 <a href="#" class="flex items-center p-2 text-[#cbd5e0] hover:bg-[#63b3ed]/10 hover:text-[#63b3ed] rounded-lg">
+                    <i data-lucide="git-pull-request" class="w-5 h-5 mr-3"></i> My Change Requests
+                </a>
+            </nav>
+            <div class="mt-auto">
+                <button id="theme-toggle" class="w-full flex items-center justify-center p-3 text-[#cbd5e0] border border-[#424242] rounded-lg hover:bg-[#2d3748]">
+                    <i data-lucide="moon" class="w-5 h-5 mr-2 hidden dark:inline-block"></i>
+                    <i data-lucide="sun" class="w-5 h-5 mr-2 inline-block dark:hidden"></i>
+                    <span class="dark:hidden">Dark Mode</span>
+                    <span class="hidden dark:inline-block">Light Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="ml-64 flex-1 bg-[#f7fafc] dark:bg-[#1a202c] p-6 lg:p-8">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-xl font-semibold text-[#2d3748] dark:text-[#f7fafc]">
+                        Courses
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#2d3748] dark:text-[#f7fafc] bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-lg hover:bg-gray-100 dark:hover:bg-[#2d3748] transition">
+                            <i data-lucide="file-edit" class="w-4 h-4"></i>
+                            Show Drafts
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#2d3748] dark:text-[#f7fafc] bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-lg hover:bg-gray-100 dark:hover:bg-[#2d3748] transition">
+                            <i data-lucide="book-user" class="w-4 h-4"></i>
+                            My Courses
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            Add Course
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative group mb-8">
+                    <input type="text" placeholder="Search for courses..." class="w-full pl-12 pr-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-[#718096] dark:text-[#cbd5e0] transition-colors group-focus-within:text-blue-500 dark:group-focus-within:text-blue-500"></i>
+                </div>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <a href="#" class="bg-white dark:bg-[#1f2937] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 dark:border-[#424242] flex flex-col">
+                        <div class="relative aspect-video">
+                            <img src="bird.png" alt="Course thumbnail" class="w-full h-full object-cover object-right">
+                            <span class="absolute top-3 left-3 z-10 inline-flex items-center text-white text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: #ed8936; color: #ffffff;">
+                                <i data-lucide="edit-3" class="w-3 h-3 mr-1.5"></i>DRAFT
+                            </span>
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-semibold text-lg text-gray-800 dark:text-[#f7fafc]">Google Drive Essentials</h5>
+                                <span class="text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: rgba(72, 187, 120, 0.1); color: #38A169;">BEGINNER</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-[#cbd5e0] mb-4 leading-relaxed flex-grow">Master Google Drive for seamless collaboration. This course covers basic setup, advanced sharing, and Workspace integration.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-[#cbd5e0] mt-auto">
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 3 hours</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="book-marked" class="w-4 h-4"></i> 8 lessons</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="presentation" class="w-4 h-4"></i> 5 slides</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="index.html" class="bg-white dark:bg-[#1f2937] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 dark:border-[#424242] flex flex-col">
+                        <div class="relative aspect-video">
+                            <img src="../oa-com/video_copy.png" alt="Course thumbnail" class="w-full h-full object-cover object-right">
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-semibold text-lg text-gray-800 dark:text-[#f7fafc]">Dropbox Fundamentals</h5>
+                                <span class="text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: rgba(72, 187, 120, 0.1); color: #38A169;">BEGINNER</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-[#cbd5e0] mb-4 leading-relaxed flex-grow">A comprehensive guide to Dropbox fundamentals. Learn to manage files, sync across devices, and collaborate effectively.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-[#cbd5e0] mt-auto">
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 4 hours</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="book-marked" class="w-4 h-4"></i> 9 Lessons</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> 12 Videos</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="bg-white dark:bg-[#1f2937] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 dark:border-[#424242] flex flex-col">
+                        <div class="relative aspect-video">
+                            <img src="../oa-com/video_copy.png" alt="Course thumbnail" class="w-full h-full object-cover object-right">
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-semibold text-lg text-gray-800 dark:text-[#f7fafc]">OneDrive for Business</h5>
+                                <span class="text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: rgba(237, 137, 54, 0.1); color: #dd6b20;">INTERMEDIATE</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-[#cbd5e0] mb-4 leading-relaxed flex-grow">Professional cloud storage and sharing. This module focuses on admin controls, compliance, and Microsoft 365 integration.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-[#cbd5e0] mt-auto">
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 5 hours</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="book-marked" class="w-4 h-4"></i> 15 lessons</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="presentation" class="w-4 h-4"></i> 12 slides</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="bg-white dark:bg-[#1f2937] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 dark:border-[#424242] flex flex-col">
+                        <div class="relative aspect-video">
+                            <img src="../oa-com/video_copy.png" alt="Course thumbnail" class="w-full h-full object-cover object-right">
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-semibold text-lg text-gray-800 dark:text-[#f7fafc]">Box Cloud Storage</h5>
+                                <span class="text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: rgba(72, 187, 120, 0.1); color: #38A169;">BEGINNER</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-[#cbd5e0] mb-4 leading-relaxed flex-grow">Learn the essentials of Box for secure file management. Explore key features for enterprise content, security, and workflow automation.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-[#cbd5e0] mt-auto">
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 4 hours</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="book-marked" class="w-4 h-4"></i> 10 lessons</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="presentation" class="w-4 h-4"></i> 7 slides</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="bg-white dark:bg-[#1f2937] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 dark:border-[#424242] flex flex-col">
+                        <div class="relative aspect-video">
+                            <img src="../oa-com/video_copy.png" alt="Course thumbnail" class="w-full h-full object-cover object-right">
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-semibold text-lg text-gray-800 dark:text-[#f7fafc]">iCloud Fundamentals</h5>
+                                <span class="text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: rgba(72, 187, 120, 0.1); color: #38A169;">BEGINNER</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-[#cbd5e0] mb-4 leading-relaxed flex-grow">Sync your Apple devices and data seamlessly with iCloud. This course covers Photos, Mail, Contacts, and iCloud Drive to keep your digital life in sync.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-[#cbd5e0] mt-auto">
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 2 hours</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="book-marked" class="w-4 h-4"></i> 6 lessons</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="presentation" class="w-4 h-4"></i> 4 slides</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="bg-white dark:bg-[#1f2937] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 dark:border-[#424242] flex flex-col">
+                        <div class="relative aspect-video">
+                            <img src="bird.png" alt="Course thumbnail" class="w-full h-full object-cover object-right">
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-semibold text-lg text-gray-800 dark:text-[#f7fafc]">Advanced Cloud Security</h5>
+                                <span class="text-xs font-semibold px-3 py-1 rounded-lg" style="background-color: rgba(168, 85, 247, 0.1); color: #9333EA;">ADVANCED</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-[#cbd5e0] mb-4 leading-relaxed flex-grow">Deep dive into enterprise-level security protocols. Understand MFA, data encryption, and best practices for securing cloud data.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-[#cbd5e0] mt-auto">
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 12 hours</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="book-marked" class="w-4 h-4"></i> 20 lessons</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> 30 Videos</span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div> </div>
+        </main>
+    </div>
+    
+    <script>
+        lucide.createIcons();
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark') {
+          htmlEl.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
