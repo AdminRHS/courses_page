@@ -38,7 +38,14 @@
         .dark .inset-shadow {
             box-shadow: inset 2px 2px 5px #000000, inset -2px -2px 5px #2d3748;
         }
-
+        
+        /* Прибираємо стрілку за замовчуванням для select, бо ми її замінили */
+        .custom-select-wrapper select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 2.5rem; /* Місце для іконки */
+        }
     </style>
 </head>
 <body class="text-[#2d3748] dark:text-[#f7fafc] transition-colors duration-300">
@@ -91,9 +98,15 @@
             <div class="max-w-7xl mx-auto">
                 
                 <div class="flex justify-between items-center mb-6">
-                    <div class="text-xl font-semibold text-[#2d3748] dark:text-[#f7fafc]">
-                        Courses
-                    </div>
+                    <nav aria-label="Breadcrumb">
+                        <ol class="flex items-center gap-2 text-sm">
+                            <li>
+                                <span class="font-semibold text-[#2d3748] dark:text-[#f7fafc]">
+                                    Courses
+                                </span>
+                            </li>
+                        </ol>
+                    </nav>
                     <div class="flex items-center gap-2">
                         <button class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#2d3748] dark:text-[#f7fafc] bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-lg hover:bg-gray-100 dark:hover:bg-[#2d3748] transition">
                             <i data-lucide="file-edit" class="w-4 h-4"></i>
@@ -110,9 +123,100 @@
                     </div>
                 </div>
 
-                <div class="relative group mb-8">
-                    <input type="text" placeholder="Search for courses..." class="w-full pl-12 pr-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
-                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-[#718096] dark:text-[#cbd5e0] transition-colors group-focus-within:text-blue-500 dark:group-focus-within:text-blue-500"></i>
+                <div class="mb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="relative group flex-grow">
+                            <input type="text" placeholder="Search for courses..." class="w-full pl-12 pr-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
+                            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-[#718096] dark:text-[#cbd5e0] transition-colors group-focus-within:text-blue-500 dark:group-focus-within:text-blue-500"></i>
+                        </div>
+                        <button id="filter-toggle-btn" class="flex-shrink-0 p-3 h-full aspect-square flex items-center justify-center bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] text-[#718096] dark:text-[#cbd5e0] rounded-xl hover:border-blue-500 hover:text-blue-500 dark:hover:border-blue-500 dark:hover:text-blue-500 transition-colors" aria-label="Toggle filters">
+                            <i data-lucide="filter" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="filter-panel" class="hidden mb-8 p-4 bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-xl shadow-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        
+                        <div class="relative" id="professions-dropdown">
+                            <button id="professions-toggle" type="button" class="w-full flex items-center justify-between px-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
+                                <span id="professions-text" class="truncate text-gray-700 dark:text-gray-300">All Professions</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500"></i>
+                            </button>
+                            <div id="professions-menu" class="hidden absolute z-20 w-full mt-1 bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                <div class="p-4 space-y-3">
+                                    <label class="flex items-center gap-3">
+                                        <input type="checkbox" data-name="Designers" class="prof-checkbox rounded text-blue-500 focus:ring-blue-500">
+                                        <span class="text-gray-800 dark:text-gray-200">Designers</span>
+                                    </label>
+                                    <label class="flex items-center gap-3">
+                                        <input type="checkbox" data-name="Developers" class="prof-checkbox rounded text-blue-500 focus:ring-blue-500">
+                                        <span class="text-gray-800 dark:text-gray-200">Developers</span>
+                                    </label>
+                                    <label class="flex items-center gap-3">
+                                        <input type="checkbox" data-name="Managers" class="prof-checkbox rounded text-blue-500 focus:ring-blue-500">
+                                        <span class="text-gray-800 dark:text-gray-200">Managers</span>
+                                    </label>
+                                     <label class="flex items-center gap-3">
+                                        <input type="checkbox" data-name="Marketers" class="prof-checkbox rounded text-blue-500 focus:ring-blue-500">
+                                        <span class="text-gray-800 dark:text-gray-200">Marketers</span>
+                                    </label>
+                                     <label class="flex items-center gap-3">
+                                        <input type="checkbox" data-name="Videographers" class="prof-checkbox rounded text-blue-500 focus:ring-blue-500">
+                                        <span class="text-gray-800 dark:text-gray-200">Videographers</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative" id="level-dropdown">
+                            <button id="level-toggle" type="button" class="w-full flex items-center justify-between px-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
+                                <span id="level-text" class="truncate text-gray-700 dark:text-gray-300">All Levels</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500"></i>
+                            </button>
+                            <div id="level-menu" class="hidden absolute z-20 w-full mt-1 bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                <div class="p-2 space-y-1">
+                                    <button type="button" data-value="all" class="level-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-700">All Levels</button>
+                                    <button type="button" data-value="beginner" class="level-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Beginner</button>
+                                    <button type="button" data-value="intermediate" class="level-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Intermediate</button>
+                                    <button type="button" data-value="advanced" class="level-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Advanced</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative" id="content-dropdown">
+                            <button id="content-toggle" type="button" class="w-full flex items-center justify-between px-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
+                                <span id="content-text" class="truncate text-gray-700 dark:text-gray-300">All Content Types</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500"></i>
+                            </button>
+                            <div id="content-menu" class="hidden absolute z-20 w-full mt-1 bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                <div class="p-2 space-y-1">
+                                    <button type="button" data-value="all" class="content-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-700">All Content Types</button>
+                                    <button type="button" data-value="markdown" class="content-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Markdown</button>
+                                    <button type="button" data-value="video" class="content-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Video</button>
+                                    <button type="button" data-value="no-video" class="content-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">No Video</button>
+                                    <button type="button" data-value="presentation" class="content-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Presentation</button>
+                                    <button type="button" data-value="no-presentation" class="content-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">No Presentation</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative" id="sort-dropdown">
+                            <button id="sort-toggle" type="button" class="w-full flex items-center justify-between px-4 py-3 border border-[#e0e0e0] dark:border-[#424242] rounded-xl bg-white dark:bg-[#1f2937] focus:border-blue-500 dark:focus:border-blue-500 transition text-base outline-none">
+                                <span id="sort-text" class="truncate text-gray-700 dark:text-gray-300">Newest First</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500"></i>
+                            </button>
+                            <div id="sort-menu" class="hidden absolute z-20 w-full mt-1 bg-white dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                <div class="p-2 space-y-1">
+                                    <button type="button" data-value="newest" class="sort-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-700">Newest First</button>
+                                    <button type="button" data-value="oldest" class="sort-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Oldest First</button>
+                                    <button type="button" data-value="rating" class="sort-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">By Rating</button>
+                                    <button type="button" data-value="popularity" class="sort-option w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">By Popularity</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
 
@@ -236,6 +340,7 @@
     <script>
         lucide.createIcons();
         
+        // --- Theme Toggle ---
         const themeToggle = document.getElementById('theme-toggle');
         const htmlEl = document.documentElement;
 
@@ -247,6 +352,143 @@
             htmlEl.classList.toggle('dark');
             localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
         });
+
+        // --- Filter Panel Toggle ---
+        const filterToggleBtn = document.getElementById('filter-toggle-btn');
+        const filterPanel = document.getElementById('filter-panel');
+
+        filterToggleBtn.addEventListener('click', () => {
+            filterPanel.classList.toggle('hidden');
+            
+            // Toggle active state for the button
+            // As per request: blue border and blue icon when open
+            
+            // Base text/border (inactive)
+            filterToggleBtn.classList.toggle('text-[#718096]');
+            filterToggleBtn.classList.toggle('dark:text-[#cbd5e0]');
+            filterToggleBtn.classList.toggle('border-[#e0e0e0]');
+            filterToggleBtn.classList.toggle('dark:border-[#424242]');
+
+            // Active text/border
+            filterToggleBtn.classList.toggle('text-blue-500');
+            filterToggleBtn.classList.toggle('dark:text-blue-400'); // Use 400 for better dark mode visibility
+            filterToggleBtn.classList.toggle('border-blue-500');
+            filterToggleBtn.classList.toggle('dark:border-blue-400');
+        });
+
+
+        // --- === Custom Dropdown Logic === ---
+
+        // Зберігаємо посилання на всі меню, щоб легко їх закривати
+        const allDropdownMenus = [];
+
+        // --- Helper to close all dropdowns ---
+        function closeAllDropdowns(excludeMenuId = null) {
+            allDropdownMenus.forEach(menu => {
+                if (!menu || (excludeMenuId && menu.id === excludeMenuId)) {
+                    return;
+                }
+                menu.classList.add('hidden');
+            });
+        }
+
+        // --- Helper function for single-select custom dropdowns ---
+        function createCustomDropdown(dropdownId, toggleId, menuId, textId, optionClass) {
+            const dropdown = document.getElementById(dropdownId);
+            const toggle = document.getElementById(toggleId);
+            const menu = document.getElementById(menuId);
+            const text = document.getElementById(textId);
+            const options = document.querySelectorAll('.' + optionClass);
+
+            if(!dropdown || !toggle || !menu || !text) return;
+
+            allDropdownMenus.push(menu); // Додаємо в глобальний список
+
+            // Toggle menu
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = menu.classList.contains('hidden');
+                closeAllDropdowns(); // Закриваємо всі інші
+                if (isHidden) {
+                    menu.classList.remove('hidden'); // Відкриваємо поточне
+                }
+            });
+
+            // Handle option selection
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Update text
+                    text.textContent = option.textContent;
+                    
+                    // Update active state
+                    options.forEach(opt => {
+                        opt.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+                    });
+                    option.classList.add('bg-gray-100', 'dark:bg-gray-700');
+                    
+                    // Close menu
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+
+        // --- Professions Multiselect Dropdown (Special Case) ---
+        const professionsDropdown = document.getElementById('professions-dropdown');
+        const professionsToggle = document.getElementById('professions-toggle');
+        const professionsMenu = document.getElementById('professions-menu');
+        const professionsText = document.getElementById('professions-text');
+        const profCheckboxes = document.querySelectorAll('.prof-checkbox');
+
+        if (professionsDropdown) {
+            allDropdownMenus.push(professionsMenu); // Додаємо в глобальний список
+
+            // Toggle dropdown
+            professionsToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = professionsMenu.classList.contains('hidden');
+                closeAllDropdowns(); // Закриваємо всі інші
+                if (isHidden) {
+                    professionsMenu.classList.remove('hidden'); // Відкриваємо поточне
+                }
+            });
+
+            // Prevent menu from closing when clicking inside (due to checkboxes)
+            professionsMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            // Update button text on checkbox change
+            profCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const selected = [];
+                    profCheckboxes.forEach(cb => {
+                        if (cb.checked) {
+                            selected.push(cb.getAttribute('data-name'));
+                        }
+                    });
+
+                    if (selected.length === 0) {
+                        professionsText.textContent = 'All Professions';
+                    } else if (selected.length > 2) {
+                         professionsText.textContent = `${selected.length} selected`;
+                    } else {
+                        professionsText.textContent = selected.join(', ');
+                    }
+                });
+            });
+        }
+        
+        // --- Initialize other dropdowns ---
+        createCustomDropdown('level-dropdown', 'level-toggle', 'level-menu', 'level-text', 'level-option');
+        createCustomDropdown('content-dropdown', 'content-toggle', 'content-menu', 'content-text', 'content-option');
+        createCustomDropdown('sort-dropdown', 'sort-toggle', 'sort-menu', 'sort-text', 'sort-option');
+
+
+        // --- Global listener to close all dropdowns when clicking outside ---
+        document.addEventListener('click', (e) => {
+             closeAllDropdowns();
+        });
+
     </script>
 </body>
 </html>
